@@ -16,9 +16,8 @@ docker run -it -u 1000:1000 --rm -e HOME \
 
 ## MacOS: Using this image
 
-On MacOS, if you wish to run this image instead of the native
-`SCID vs Mac` port, you need to install `XQuartz` and `socat`.
-With `brew` installed, do this:
+On MacOS, if you wish to run this image, you need to install `XQuartz` and
+`socat`. With `brew` installed, do this:
 
 ```
 brew cask install xquartz
@@ -36,12 +35,12 @@ pgmodeler() {
     echo "ERROR: Quartz is not running. Start Quartz and try again."
   else
     socat TCP-LISTEN:6001,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\" &
-    SOCAT_SCID_PID=$!
+    SOCAT_PGM_PID=$!
     docker run --rm \
       -e HOME \
       -e XAUTHORITY=/tmp/xauth -v ~/.Xauthority:/tmp/xauth \
       -e DISPLAY=$__my_ip:1 --net host -v $HOME:$HOME kayvan/pgmodeler
-    kill $SOCAT_SCID_PID
+    kill $SOCAT_PGM_PID
   fi
 }
 ```
