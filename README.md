@@ -5,14 +5,28 @@ pgmodeler in a container
 To run this image, share the X11 socket or use any
 of the other methods to run X11 Apps in Docker.
 
-For example, you can run the image like this:
+For example, you can run the image like this on Linux. With this snippet
+in your `~/.bahsrc`:
 
 ```
-docker run -it -u 1000:1000 --rm -e HOME \
-  -e DISPLAY=unix:0 -e XAUTHORITY=/tmp/xauth \
-  -v $XAUTHORITY:/tmp/xauth -v $HOME:$HOME \
-  -v /tmp/.X11-unix:/tmp/.X11-unix kayvan/pgmodeler
+pgmodeler()
+{
+  docker run -it -u 1000:1000 --rm -e HOME \
+    -e DISPLAY=unix:0 -e XAUTHORITY=/tmp/xauth \
+    -v $XAUTHORITY:/tmp/xauth -v $HOME:$HOME \
+    -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    ${1+"$@"} kayvan/pgmodeler
+}
 ```
+
+Now, with `postgres` running in its own container, you can use the `--link`
+and `--network` parameters for `docker run`. For example:
+
+```
+pgmodeler --link proj_postgres_1:db --network proj_default
+```
+And then use `db` to refer to the database host.
 
 ## MacOS: Using this image
 
@@ -39,13 +53,22 @@ pgmodeler() {
     docker run --rm \
       -e HOME \
       -e XAUTHORITY=/tmp/xauth -v ~/.Xauthority:/tmp/xauth \
-      -e DISPLAY=$__my_ip:1 --net host -v $HOME:$HOME kayvan/pgmodeler
+      -e DISPLAY=$__my_ip:1 --net host -v $HOME:$HOME \
+      ${1+"$@"} kayvan/pgmodeler
     kill $SOCAT_PGM_PID
   fi
 }
 ```
 
 Now, `pgmodeler` should launch the application.
+
+If `postgress` is running in its own container, you
+can use the `--link` and `--network` parameters for `docker run`:
+
+```
+pgmodeler --link proj_postgres_1:db --network proj_default
+```
+And then use `db` to refer to the database host.
 
 # Reference
 
