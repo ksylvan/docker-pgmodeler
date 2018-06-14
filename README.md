@@ -72,4 +72,4 @@ And then use `db` to refer to the database host.
 
 # Reference
 
-- https://www.pgmodeler.com.br
+- https://www.pgmodeler.io
