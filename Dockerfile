@@ -2,7 +2,7 @@ FROM debian:stretch-slim
 
 LABEL maintainer "Kayvan Sylvan <kayvansylvan@gmail.com>"
 
-ENV PG_VERSION 0.9.1-beta1
+ENV PG_VERSION 0.9.0
 
 ADD https://codeload.github.com/pgmodeler/pgmodeler/tar.gz/v${PG_VERSION} /usr/local/src/
 WORKDIR /usr/local/src/
