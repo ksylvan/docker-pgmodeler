@@ -2,12 +2,12 @@ FROM debian:stretch-slim
 
 LABEL maintainer "Kayvan Sylvan <kayvansylvan@gmail.com>"
 
-ENV PG_VERSION 0.9.1-beta1
+ENV PG_VERSION 0.9.1
 
-ADD https://github.com/ksylvan/pgmodeler/archive/v${PG_VERSION}.tar.gz /usr/local/src/
+ADD https://codeload.github.com/pgmodeler/pgmodeler/tar.gz/v${PG_VERSION} /usr/local/src/
 WORKDIR /usr/local/src/
 
-RUN if [ ! -d pgmodeler-${PG_VERSION} ]; then tar xvzf v${PG_VERSION}.tar.gz; fi \
+RUN if [ ! -d pgmodeler-${PG_VERSION} ]; then tar xvzf v${PG_VERSION}; fi \
   && cd pgmodeler-${PG_VERSION} \
   && BUILD_PKGS="make g++ qt5-qmake libxml2-dev \
     libpq-dev pkg-config libqt5svg5-dev" \
