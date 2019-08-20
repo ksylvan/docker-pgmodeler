@@ -2,6 +2,11 @@
 
 pgmodeler in a container
 
+If you have make/gmake consider running:
+```
+make help
+```
+
 To run this image, share the X11 socket or use any
 of the other methods to run X11 Apps in Docker.
 

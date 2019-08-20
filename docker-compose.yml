@@ -1,0 +1,23 @@
+version: '3' # Which version of Docker Compose to use
+services:
+  pgmodeler-x11:
+    image: kayvan/pgmodeler:latest
+    entrypoint: bash -c "/usr/local/bin/pgmodeler"
+    environment:
+      - DISPLAY=host.docker.internal:0
+    volumes:
+      - ./runVNCserver.sh:/root/.vnc/runVNCserver.sh
+      - ~/.config/pgmodeler/:/root/.config/pgmodeler/
+  pgmodeler-vnc:
+    image: kayvan/pgmodeler:latest
+    entrypoint: bash -c "/root/.vnc/runVNCserver.sh"
+    environment:
+      - DISPLAY=:20
+      - LISTENPORT=16922
+      - VNCPORT=15922
+    ports:
+      - 15922:15922
+      - 16922:16922
+    volumes:
+      - ./runVNCserver.sh:/root/.vnc/runVNCserver.sh
+      - ~/.config/pgmodeler/:/root/.config/pgmodeler/

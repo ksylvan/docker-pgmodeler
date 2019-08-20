@@ -23,4 +23,6 @@ RUN if [ ! -d pgmodeler-${PG_VERSION} ]; then tar xvzf v${PG_VERSION}; fi \
   && mkdir -p /usr/local/lib/pgmodeler/plugins \
   && chmod 777 /usr/local/lib/pgmodeler/plugins
 
+RUN apt-get update && apt-get install -y x11vnc xvfb net-tools novnc xdotool git
+
 ENTRYPOINT ["/usr/local/bin/pgmodeler"]
